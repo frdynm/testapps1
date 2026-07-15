@@ -7,6 +7,9 @@ import SwiftUI
 // TODO: Add DesignSystem target dependency
 // import DesignSystem
 
+// TODO: Add LocalizationManager target dependency
+// import LocalizationManager
+
 struct DestinationDetailView: View {
     @StateObject private var viewModel: DestinationDetailViewModel
 
@@ -114,10 +117,10 @@ struct DestinationDetailView: View {
             columns: [GridItem(.flexible()), GridItem(.flexible())],
             spacing: AppSpacing.md
         ) {
-            InfoCard(title: "Population", value: viewModel.formattedPopulation)
-            InfoCard(title: "Price", value: viewModel.formattedPrice)
-            InfoCard(title: "Latitude", value: viewModel.formattedLatitude)
-            InfoCard(title: "Longitude", value: viewModel.formattedLongitude)
+            InfoCard(title: testappsStrings.detailPopulation, value: viewModel.formattedPopulation)
+            InfoCard(title: testappsStrings.detailPrice, value: viewModel.formattedPrice)
+            InfoCard(title: testappsStrings.detailLatitude, value: viewModel.formattedLatitude)
+            InfoCard(title: testappsStrings.detailLongitude, value: viewModel.formattedLongitude)
         }
     }
 
@@ -125,7 +128,7 @@ struct DestinationDetailView: View {
         HStack(spacing: AppSpacing.xs) {
             Image(systemName: "camera")
                 .foregroundStyle(.secondary)
-            Text(viewModel.photographerCredit)
+            Text(testappsStrings.detailPhotographer(viewModel.destination.photographer))
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }

@@ -7,6 +7,9 @@ import SwiftUI
 // TODO: Add DesignSystem target dependency
 // import DesignSystem
 
+// TODO: Add LocalizationManager target dependency
+// import LocalizationManager
+
 struct DestinationListView: View {
     @StateObject private var viewModel: DestinationViewModel
 
@@ -17,7 +20,7 @@ struct DestinationListView: View {
     var body: some View {
         NavigationView {
             contentView
-                .navigationTitle("Destinations")
+                .navigationTitle(testappsStrings.destinationsTitle)
                 .task {
                     await viewModel.loadDestinations()
                 }
@@ -39,7 +42,7 @@ struct DestinationListView: View {
 
     // MARK: - Loading View
     private var loadingView: some View {
-        ProgressView("Loading...")
+        ProgressView(testappsStrings.generalLoading)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
@@ -67,7 +70,7 @@ struct DestinationListView: View {
     }
 
     private var retryButton: some View {
-        Button("Retry") {
+        Button(testappsStrings.generalRetry) {
             Task {
                 await viewModel.loadDestinations()
             }
