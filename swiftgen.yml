@@ -1,0 +1,13 @@
+# SwiftGen Configuration
+input_dir: testapps/Core/LocalizationManager/Sources/LocalizationManager/Resources
+output_dir: testapps/Core/LocalizationManager/Sources/LocalizationManager/Resources
+
+strings:
+  inputs:
+    - en.lproj  # Hanya satu bahasa sebagai input
+  outputs:
+    - templatePath: scripts/SwiftgenTemplates/Localization.stencil
+      output: testappsStrings.generated.swift
+      params:
+        publicAccess: true
+        enumName: "testappsStrings"
