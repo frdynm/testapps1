@@ -12,6 +12,7 @@ import SwiftUI
 
 struct DestinationListView: View {
     @StateObject private var viewModel: DestinationViewModel
+    @State private var currentLanguage: Language = .systemLanguage
 
     init(viewModel: DestinationViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
@@ -21,6 +22,11 @@ struct DestinationListView: View {
         NavigationView {
             contentView
                 .navigationTitle(testappsStrings.destinationsTitle)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        languageToggleButton
+                    }
+                }
                 .task {
                     await viewModel.loadDestinations()
                 }
@@ -86,5 +92,23 @@ struct DestinationListView: View {
             }
         }
         .listStyle(.insetGrouped)
+    }
+
+    // MARK: - Language Toggle Button
+    private var languageToggleButton: some View {
+        Button(action: toggleLanguage) {
+            HStack(spacing: 4) {
+                Image(systemName: "globe")
+                Text(currentLanguage.rawValue.uppercased())
+                    .font(.caption)
+                    .fontWeight(.semibold)
+            }
+            .foregroundStyle(.blue)
+        }
+    }
+
+    private func toggleLanguage() {
+        currentLanguage = currentLanguage == .en ? .id : .en
+        LocalizationContainer.shared().setLanguage(currentLanguage)
     }
 }
