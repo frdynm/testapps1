@@ -74,6 +74,9 @@ testapps/
 │                           └── DestinationDetailView.swift
 │
 └── Application/                   # App Entry Point
+    ├── Routes/                   # Routing layer
+    │   ├── Route.swift          # Route definitions
+    │   └── RouteView.swift      # Routing handler
     └── Sources/
         └── testappsApp.swift
 ```
@@ -93,6 +96,12 @@ View → ViewModel → UseCase → Repository → NetworkManager → API
 - Loading state with progress view
 - Error handling with retry
 - Clickable rows → detail page
+- **Search by country** - Filter destinations in real-time
+
+### ✅ Routing
+- RouteView infrastructure for centralized navigation
+- Route enum for type-safe navigation
+- Native NavigationLink integration
 
 ### ✅ Destination Detail
 - Hero image dengan flag badge
