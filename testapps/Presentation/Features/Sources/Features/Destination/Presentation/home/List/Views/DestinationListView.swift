@@ -13,6 +13,7 @@ import SwiftUI
 struct DestinationListView: View {
     @StateObject private var viewModel: DestinationViewModel
     @State private var currentLanguage: Language = .systemLanguage
+    @State private var searchText = ""
 
     init(viewModel: DestinationViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
@@ -21,12 +22,13 @@ struct DestinationListView: View {
     var body: some View {
         NavigationView {
             contentView
-                .navigationTitle(testappsStrings.destinationsTitle)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         languageToggleButton
                     }
                 }
+                .navigationTitle(testappsStrings.destinationsTitle)
+                .searchable(text: $searchText, prompt: "Search by country")
                 .task {
                     await viewModel.loadDestinations()
                 }
@@ -86,12 +88,21 @@ struct DestinationListView: View {
 
     // MARK: - Destinations List
     private var destinationsList: some View {
-        List(viewModel.destinations) { destination in
+        List(filteredDestinations) { destination in
             NavigationLink(destination: DestinationDetailView(destination: destination)) {
                 DestinationRowView(destination: destination)
             }
         }
         .listStyle(.insetGrouped)
+    }
+
+    private var filteredDestinations: [DestinationEntity] {
+        if searchText.isEmpty {
+            return viewModel.destinations
+        }
+        return viewModel.destinations.filter { destination in
+            destination.country.localizedCaseInsensitiveContains(searchText)
+        }
     }
 
     // MARK: - Language Toggle Button
